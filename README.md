@@ -12,6 +12,9 @@ The API reference is [here](https://developer.chrome.com/apps/sockets_udp).
 
 # Release Notes
 
+## 1.2.1 (Mar 17, 2015)
+* Fix multicast socket cannot pause & send receive event synchronously
+
 ## 1.2.0 (November 17, 2014)
 * Remove unnecessary headers for chrome.sockets.* - ios
 * Fix possible blocks leak memory
