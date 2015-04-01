@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-registerManualTests('chrome.sockets.udp', function(rootEl, addButton) {
+exports.defineManualTests = function(rootEl, addButton) {
 
   function sendTo(data, addr, port) {
     chrome.sockets.udp.create(function(createInfo) {
@@ -265,4 +265,4 @@ registerManualTests('chrome.sockets.udp', function(rootEl, addButton) {
 
   initPage();
 
-});
+};
