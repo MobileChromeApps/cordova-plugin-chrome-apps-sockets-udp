@@ -9,10 +9,10 @@ exports.defineManualTests = function(rootEl, addButton) {
       chrome.sockets.udp.bind(createInfo.socketId, '0.0.0.0', 0, function(result) {
         chrome.sockets.udp.send(createInfo.socketId, data, addr, port, function(result) {
           if (result < 0) {
-            logger('send fail: ' + result);
+            console.log('send fail: ' + result);
             chrome.sockets.udp.close(createInfo.socketId);
           } else {
-            logger('sendTo: success ' + port);
+            console.log('sendTo: success ' + port);
             chrome.sockets.udp.close(createInfo.socketId);
           }
         });
@@ -21,13 +21,13 @@ exports.defineManualTests = function(rootEl, addButton) {
   }
 
   function receiveErrorListener(info) {
-    logger('RecvError on socket: ' + info.socketId);
+    console.log('RecvError on socket: ' + info.socketId);
     chrome.sockets.udp.close(info.socketId);
   }
 
   function receiveListener(info) {
-    logger('Recv from socket: ');
-    logger(info);
+    console.log('Recv from socket: ');
+    console.log(info);
     chrome.sockets.udp.close(info.socketId);
   }
 
@@ -98,31 +98,31 @@ exports.defineManualTests = function(rootEl, addButton) {
   function joinMulticastGroup(address, port, loopback) {
     chrome.sockets.udp.create(function (socket) {
       var socketId = socket.socketId;
-      logger(socket);
+      console.log(socket);
       chrome.sockets.udp.setMulticastTimeToLive(socketId, 12, function (result) {
         if (result != 0) {
-          logger("Set TTL Error: " + result);
+          console.log("Set TTL Error: " + result);
         }
         chrome.sockets.udp.setMulticastLoopbackMode(socketId, loopback, function (result) {
           if (result != 0) {
-            logger("Set Multicast LoopbackMode" + result);
+            console.log("Set Multicast LoopbackMode" + result);
           }
           chrome.sockets.udp.bind(socketId, "0.0.0.0", port, function (result) {
             if (result != 0) {
               chrome.sockets.udp.close(socketId);
-              logger("Error on bind(): " + result);
+              console.log("Error on bind(): " + result);
             } else {
               chrome.sockets.udp.joinGroup(socketId, address, function (result) {
                 if (result != 0) {
                   chrome.sockets.udp.close(socketId);
-                  logger("Error on joinGroup(): " + result);
+                  console.log("Error on joinGroup(): " + result);
                 } else {
                   message = stringToArrayBuffer(socketId + ' Joined Group');
                   chrome.sockets.udp.send(socketId, message, address, port, function (result) {
                       if (result < 0) {
-                        logger('send fail: ' + result);
+                        console.log('send fail: ' + result);
                       } else {
-                        logger('group sendTo: success');
+                        console.log('group sendTo: success');
                       }
                   });
                 }
@@ -138,7 +138,7 @@ exports.defineManualTests = function(rootEl, addButton) {
     chrome.sockets.udp.getSockets(function(socketsInfo) {
       if (!socketsInfo) return;
       for (var i = 0; i < socketsInfo.length; i++) {
-        logger(socketsInfo[i]);
+        console.log(socketsInfo[i]);
       }
     });
   }
@@ -153,7 +153,7 @@ exports.defineManualTests = function(rootEl, addButton) {
       chrome.sockets.udp.update(createInfo.socketId, updatedProperties);
 
       chrome.sockets.udp.getInfo(createInfo.socketId, function(socketInfo) {
-        logger(socketInfo);
+        console.log(socketInfo);
       });
     });
   }
@@ -162,7 +162,7 @@ exports.defineManualTests = function(rootEl, addButton) {
     chrome.sockets.udp.create({}, function(createInfo) {
       chrome.sockets.udp.setPaused(createInfo.socketId, true);
       chrome.sockets.udp.getInfo(createInfo.socketId, function(socketInfo) {
-        logger(socketInfo);
+        console.log(socketInfo);
       });
     });
   }
@@ -171,7 +171,7 @@ exports.defineManualTests = function(rootEl, addButton) {
     chrome.sockets.udp.getSockets(function(socketsInfo) {
       if (!socketsInfo) return;
       for (var i = 0; i < socketsInfo.length; i++) {
-        logger('closing socket: ' + socketsInfo[i].socketId);
+        console.log('closing socket: ' + socketsInfo[i].socketId);
         chrome.sockets.udp.close(socketsInfo[i].socketId);
       }
     });
@@ -183,10 +183,10 @@ exports.defineManualTests = function(rootEl, addButton) {
       chrome.sockets.udp.bind(createInfo.socketId, '0.0.0.0', port, function(result) {
         chrome.sockets.udp.send(createInfo.socketId, data, '255.255.255.255', port, function(result) {
           if (result < 0) {
-            logger('send fail: ' + result);
+            console.log('send fail: ' + result);
             chrome.sockets.udp.close(createInfo.socketId);
           } else {
-            logger('sendTo: success ' + port);
+            console.log('sendTo: success ' + port);
             chrome.sockets.udp.close(createInfo.socketId);
           }
         });
