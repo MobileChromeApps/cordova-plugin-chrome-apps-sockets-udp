@@ -41,7 +41,6 @@ static NSString* stringFromData(NSData* data) {
     NSString* _receiveEventsCallbackId;
 }
 
-- (CDVPlugin*)initWithWebView:(UIWebView*)theWebView;
 - (void)create:(CDVInvokedUrlCommand*)command;
 - (void)update:(CDVInvokedUrlCommand*)command;
 - (void)setPaused:(CDVInvokedUrlCommand*)command;
@@ -234,15 +233,11 @@ static NSString* stringFromData(NSData* data) {
 
 @implementation ChromeSocketsUdp
 
-- (CDVPlugin*)initWithWebView:(UIWebView*)theWebView
+- (void)pluginInitialize
 {
-    self = [super initWithWebView:theWebView];
-    if (self) {
-        _sockets = [NSMutableDictionary dictionary];
-        _nextSocketId = 0;
-        _receiveEventsCallbackId = nil;
-    }
-    return self;
+    _sockets = [NSMutableDictionary dictionary];
+    _nextSocketId = 0;
+    _receiveEventsCallbackId = nil;
 }
 
 - (void)onReset
