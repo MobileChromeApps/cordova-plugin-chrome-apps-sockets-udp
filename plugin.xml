@@ -16,7 +16,7 @@
   <repo>https://github.com/MobileChromeApps/cordova-plugin-chrome-apps-sockets-udp.git</repo>
   <issue>https://github.com/MobileChromeApps/cordova-plugin-chrome-apps-sockets-udp/issues</issue>
 
-  <dependency id="cordova-plugin-chrome-apps-common" />
+  <dependency id="cordova-plugin-chrome-apps-common@1" />
 
   <js-module src="sockets.udp.js" name="sockets.udp">
     <clobbers target="chrome.sockets.udp" />
@@ -33,7 +33,7 @@
   </platform>
 
   <platform name="ios">
-    <dependency id="cordova-plugin-chrome-apps-iossocketscommon" />
+    <dependency id="cordova-plugin-chrome-apps-iossocketscommon@1" />
     <source-file src="src/ios/ChromeSocketsUdp.m" />
 
     <config-file target="config.xml" parent="/widget">
