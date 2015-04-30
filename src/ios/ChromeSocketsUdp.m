@@ -163,7 +163,7 @@ static NSString* stringFromData(NSData* data) {
         if ([bufferSize integerValue] > UINT32_MAX) {
             [_socket setMaxReceiveIPv6BufferSize:UINT32_MAX];
         } else {
-            [_socket setMaxReceiveIPv6BufferSize:[_bufferSize integerValue]];
+            [_socket setMaxReceiveIPv6BufferSize:(int)[_bufferSize integerValue]];
         }
     }
 }
@@ -261,7 +261,7 @@ static NSString* stringFromData(NSData* data) {
 
     ChromeSocketsUdpSocket *socket = [[ChromeSocketsUdpSocket alloc] initWithId:_nextSocketId++ plugin:self properties:properties];
     _sockets[[NSNumber numberWithUnsignedInteger:socket->_socketId]] = socket;
-    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:socket->_socketId] callbackId:command.callbackId];
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)socket->_socketId] callbackId:command.callbackId];
 }
 
 - (void)update:(CDVInvokedUrlCommand*)command
@@ -342,7 +342,7 @@ static NSString* stringFromData(NSData* data) {
         VERBOSE_LOG(@"ACK %@.%@ Write: %d", socketId, command.callbackId, success);
 
         if (success) {
-            [commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:[data length]] callbackId:command.callbackId];
+            [commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)[data length]] callbackId:command.callbackId];
         } else {
             [commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:[self buildErrorInfoWithErrorCode:[error code] message:[error localizedDescription]]] callbackId:command.callbackId];
         }
@@ -561,7 +561,7 @@ static NSString* stringFromData(NSData* data) {
     
     NSDictionary* info = @{
         @"socketId": [NSNumber numberWithUnsignedInteger:theSocketId],
-        @"resultCode": [NSNumber numberWithUnsignedInt:[theError code]],
+        @"resultCode": [NSNumber numberWithUnsignedInt:(int)[theError code]],
         @"message": [theError localizedDescription],
     };
     
