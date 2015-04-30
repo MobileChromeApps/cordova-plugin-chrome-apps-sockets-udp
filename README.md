@@ -12,6 +12,9 @@ The API reference is [here](https://developer.chrome.com/apps/sockets_udp).
 
 # Release Notes
 
+## 1.2.2 (April 30, 2015)
+- Renamed plugin to pubilsh to NPM
+
 ## 1.2.1 (Mar 17, 2015)
 * Fix multicast socket cannot pause & send receive event synchronously
 
