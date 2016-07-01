@@ -297,6 +297,7 @@ static NSString* stringFromData(NSData* data) {
 {
     NSNumber* socketId = [command argumentAtIndex:0];
     NSString* address = [command argumentAtIndex:1];
+    NSNumber* portPointer = [command argumentAtIndex:2];
     NSUInteger port;
     @try {
         port =  [portPointer unsignedIntegerValue];
