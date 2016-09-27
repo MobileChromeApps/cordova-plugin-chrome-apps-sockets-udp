@@ -100,13 +100,23 @@ exports.getSockets = function(callback) {
     exec(win, null, 'ChromeSocketsUdp', 'getSockets', []);
 };
 
+exports.setBroadcast = function(socketId, enabled, callback) {
+    var win = callback && function() {
+        callback(0);
+    };
+    var fail = callback && function(error) {
+        callback(error.message, callback, error.resultCode);
+    };
+    exec(win, fail, 'ChromeSocketsUdp', 'setBroadcast', [socketId, enabled]);
+};
+
 exports.joinGroup = function(socketId, address, callback) {
     var win = callback && function() {
         callback(0);
     };
     var fail = callback && function(error) {
         callback(error.message, callback, error.resultCode);
-    }
+    };
     exec(win, fail, 'ChromeSocketsUdp', 'joinGroup', [socketId, address]);
 };
 
@@ -116,7 +126,7 @@ exports.leaveGroup = function(socketId, address, callback) {
     };
     var fail = callback && function(error) {
         callback(error.message, callback, error.resultCode);
-    }
+    };
     exec(win, fail, 'ChromeSocketsUdp', 'leaveGroup', [socketId, address]);
 };
 
@@ -126,7 +136,7 @@ exports.setMulticastTimeToLive = function(socketId, ttl, callback) {
     };
     var fail = callback && function(error) {
         callback(error.message, callback, error.resultCode);
-    }
+    };
     exec(win, fail, 'ChromeSocketsUdp', 'setMulticastTimeToLive', [socketId, ttl]);
 };
 
@@ -136,7 +146,7 @@ exports.setMulticastLoopbackMode = function(socketId, enabled, callback) {
     };
     var fail = callback && function(error) {
         callback(error.message, callback, error.resultCode);
-    }
+    };
     exec(win, fail, 'ChromeSocketsUdp', 'setMulticastLoopbackMode', [socketId, enabled]);
 };
 
