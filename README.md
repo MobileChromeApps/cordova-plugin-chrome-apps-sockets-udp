@@ -12,6 +12,9 @@ The API reference is [here](https://developer.chrome.com/apps/sockets_udp).
 
 # Release Notes
 
+## 1.3.0 (Sep 27, 2016)
+- Adds `chrome.udp.setBroadcast()`
+
 ## 1.2.2 (April 30, 2015)
 - Renamed plugin to pubilsh to NPM
 
