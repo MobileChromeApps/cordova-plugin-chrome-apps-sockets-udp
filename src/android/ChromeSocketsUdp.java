@@ -72,6 +72,8 @@ public class ChromeSocketsUdp extends CordovaPlugin {
       setMulticastTimeToLive(args, callbackContext);
     } else if ("setMulticastLoopbackMode".equals(action)) {
       setMulticastLoopbackMode(args, callbackContext);
+    } else if ("setBroadcast".equals(action)) {
+      setBroadcast(args, callbackContext);
     } else if ("getJoinedGroups".equals(action)) {
       getJoinedGroups(args, callbackContext);
     } else if ("registerReceiveEvents".equals(action)) {
@@ -318,6 +320,28 @@ public class ChromeSocketsUdp extends CordovaPlugin {
     } catch (IOException e) {
       callbackContext.error(buildErrorInfo(-2, e.getMessage()));
     }
+  }
+
+  private void setBroadcast(CordovaArgs args, final CallbackContext callbackContext)
+    throws JSONException{
+    int socketId = args.getInt(0);
+    boolean enabled = args.getBoolean(1);
+
+    UdpSocket socket = sockets.get(Integer.valueOf(socketId));
+
+    if (socket == null) {
+      Log.e(LOG_TAG, "No socket with socketId " + socketId);
+      callbackContext.error(buildErrorInfo(-4, "Invalid Argument"));
+      return;
+    }
+
+    try {
+      socket.setBroadcast(enabled);
+      callbackContext.success();
+    } catch (IOException e) {
+      callbackContext.error(buildErrorInfo(-2, e.getMessage()));
+    }
+
   }
 
   private void setMulticastLoopbackMode(CordovaArgs args, final CallbackContext callbackContext)
@@ -790,6 +814,10 @@ public class ChromeSocketsUdp extends CordovaPlugin {
       }
 
       multicastSocket.setLoopbackMode(!enabled);
+    }
+
+    void setBroadcast(boolean enabled) throws IOException{
+      channel.socket().setBroadcast(enabled);
     }
 
     public Collection<String> getJoinedGroups() {

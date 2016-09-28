@@ -181,14 +181,16 @@ exports.defineManualTests = function(rootEl, addButton) {
     var port = 1667;
     chrome.sockets.udp.create(function(createInfo) {
       chrome.sockets.udp.bind(createInfo.socketId, '0.0.0.0', port, function(result) {
-        chrome.sockets.udp.send(createInfo.socketId, data, '255.255.255.255', port, function(result) {
-          if (result < 0) {
-            console.log('send fail: ' + result);
-            chrome.sockets.udp.close(createInfo.socketId);
-          } else {
-            console.log('sendTo: success ' + port);
-            chrome.sockets.udp.close(createInfo.socketId);
-          }
+        chrome.sockets.udp.setBroadcast(createInfo.socketId, true, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, data, '255.255.255.255', port, function(result) {
+            if (result < 0) {
+              console.log('send fail: ' + result);
+              chrome.sockets.udp.close(createInfo.socketId);
+            } else {
+              console.log('sendTo: success ' + port);
+              chrome.sockets.udp.close(createInfo.socketId);
+            }
+          });
         });
       });
     });
