@@ -298,7 +298,15 @@ static NSString* stringFromData(NSData* data) {
 {
     NSNumber* socketId = [command argumentAtIndex:0];
     NSString* address = [command argumentAtIndex:1];
-    NSUInteger port = [[command argumentAtIndex:2] unsignedIntegerValue];
+    NSNumber* portPointer = [command argumentAtIndex:2];
+    NSUInteger port;
+    @try {
+        port =  [portPointer unsignedIntegerValue];
+    } @catch (NSException *exception) {
+        port =  0; //HOTFIX fix bug in cordova 6.0.2
+        // the error thrown is : [NSTaggedPointerString unsignedIntegerValue]: unrecognized selector sent to instance
+        // set the value to 0 if it fails so that the port would be at least set automatically instead of just crashing silently.
+    }
 
     if ([address isEqualToString:@"0.0.0.0"])
         address = nil;
